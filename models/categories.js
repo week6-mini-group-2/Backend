@@ -12,7 +12,7 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       // define association here
       models.Categories.hasOne(models.Posts, {
-        foreignKey: 'categ',
+        foreignKey: 'categoryId',
         onDelete: "cascade",
         onUpdate: "cascade"
       })

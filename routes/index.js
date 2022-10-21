@@ -8,7 +8,7 @@ const todoRouter = require('./todo.js');
 
 router.use("/comments", commentsRouter);
 router.use("/posts", postsRouter);
-router.use("/user", userRouter);
+router.use("/users", userRouter);
 router.use("/todo", todoRouter);
 
 module.exports = router; 
