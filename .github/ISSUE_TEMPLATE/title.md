@@ -3,7 +3,7 @@ name: Title
 about: Content
 title: ''
 labels: enhancement
-assignees: ''
+assignees: JunyoungChoi2020
 
 ---
 
