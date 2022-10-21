@@ -16,6 +16,16 @@ module.exports = (sequelize, DataTypes) => {
         onDelete: "cascade",
         onUpdate: "cascade"
       });
+      models.Users.hasMany(models.Comments, {
+        foreignKey: 'userId',
+        onDelete: "cascade",
+        onUpdate: "cascade"
+      });
+      models.Users.hasOne(model.Ranks, {
+        foreignKey: 'userId',
+        onDelete: "cascade",
+        onUpdate: "cascade"
+      });
     }
   }
   Users.init({
@@ -31,6 +41,9 @@ module.exports = (sequelize, DataTypes) => {
     password: {
       type: DataTypes.STRING
     },
+    refreshToken: {
+      type: DataTypes.STRING
+    },
     createdAt: {
       allowNull: false,
       type: DataTypes.DATE
@@ -38,9 +51,6 @@ module.exports = (sequelize, DataTypes) => {
     updatedAt: {
       allowNull: false,
       type: DataTypes.DATE
-    },
-    refreshToken: {
-      type: DataTypes.STRING
     }
   }, {
     sequelize,

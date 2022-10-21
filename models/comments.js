@@ -30,14 +30,14 @@ module.exports = (sequelize, DataTypes) => {
       primaryKey: true,
       type: DataTypes.INTEGER
     },
-    comment: {
-      type: DataTypes.STRING
+    postId: {
+      type: DataTypes.INTEGER
     },
     userId: {
       type: DataTypes.INTEGER
     },
-    postId: {
-      type: DataTypes.INTEGER
+    comment: {
+      type: DataTypes.STRING
     },
     editCheck: {
       type: DataTypes.BOOLEAN
