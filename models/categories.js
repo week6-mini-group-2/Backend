@@ -3,7 +3,7 @@ const {
   Model
 } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
-  class Todos extends Model {
+  class Categories extends Model {
     /**
      * Helper method for defining associations.
      * This method is not a part of Sequelize lifecycle.
@@ -11,33 +11,25 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      models.Todos.hasMany(models.Users, {
-        foreignKey: 'userId',
+      models.Categories.hasOne(models.Posts, {
+        foreignKey: 'categ',
         onDelete: "cascade",
         onUpdate: "cascade"
-      });
-      models.Todos.belongsTo(models.Posts, {
-        foreignKey: 'postId',
-        onDelete: "cascade",
-        onUpdate: "cascade"
-      });
+      })
     }
   }
-  Todos.init({
-    todoId: {
+  Categories.init({
+    categoryId: {
       allowNull: false,
       autoIncrement: true,
       primaryKey: true,
       type: DataTypes.INTEGER
     },
-    postId: {
-      type: DataTypes.INTEGER
-    },
-    content: {
+    name: {
       type: DataTypes.STRING
     },
-    done: {
-      type: DataTypes.BOOLEAN
+    rewards: {
+      type: DataTypes.STRING
     },
     createdAt: {
       allowNull: false,
@@ -49,7 +41,7 @@ module.exports = (sequelize, DataTypes) => {
     }
   }, {
     sequelize,
-    modelName: 'Todos',
+    modelName: 'Categories',
   });
-  return Todos;
+  return Categories;
 };

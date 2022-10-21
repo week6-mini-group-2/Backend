@@ -3,7 +3,7 @@ const {
   Model
 } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
-  class Posts extends Model {
+  class Ranks extends Model {
     /**
      * Helper method for defining associations.
      * This method is not a part of Sequelize lifecycle.
@@ -11,56 +11,48 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      models.Posts.hasMany(models.Comments, {
-        foreignKey: 'postId',
+      models.Ranks.belongsTo(models.Users, {
+        foreignKey: 'userId',
         onDelete: "cascade",
         onUpdate: "cascade"
       });
-      models.Posts.belongsTo(models.Users, {
-        foreignKey: "userId",
-        onDelete: "cascade",
-        onUpdate: "cascade"
-      });
-      models.Posts.belongsTo(models.Categories, {
-        foreignKey: "categoryId",
+      models.Ranks.belongsTo(models.Categories, {
+        foreignKey: 'categoryId',
         onDelete: "cascade",
         onUpdate: "cascade"
       });
     }
   }
-  Posts.init({
-    postId: {
+  Ranks.init({
+    rankId: {
       allowNull: false,
       autoIncrement: true,
       primaryKey: true,
-      type: DataTypes.INTEGER
-    },
-    categoryId: {
-      type: DataTypes.INTEGER
+      type: Sequelize.INTEGER
     },
     userId: {
-      type: DataTypes.INTEGER
+      type: Sequelize.STRING
     },
-    title: {
-      type: DataTypes.STRING
+    categoryId: {
+      type: Sequelize.INTEGER
     },
-    content: {
-      type: DataTypes.STRING
+    score: {
+      type: Sequelize.INTEGER
     },
-    lookup: {
-      type: DataTypes.INTEGER
+    rank: {
+      type: Sequelize.INTEGER
     },
     createdAt: {
       allowNull: false,
-      type: DataTypes.DATE
+      type: Sequelize.DATE
     },
     updatedAt: {
       allowNull: false,
-      type: DataTypes.DATE
+      type: Sequelize.DATE
     }
   }, {
     sequelize,
-    modelName: 'Posts',
+    modelName: 'Ranks',
   });
-  return Posts;
+  return Ranks;
 };
