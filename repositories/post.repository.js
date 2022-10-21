@@ -20,13 +20,13 @@ class PostsRepository{
     };
     updatePost = async(userId, postId, title, imageUrl) => {
         await Posts.update(
+            {title : title, imageUrl: imageUrl} ,
             {where: {userId : userId, postId: postId}},
-            {title : title, imageUrl: imageUrl} 
         )
         return {msg: "Post updated"};
     };
     deletePost = async(postId) => {
-        await Posts.delete({where: {postId: postId}});
+        await Posts.destroy({where: {postId: postId}});
         return {msg: "Post deleted"};
     };
 }
