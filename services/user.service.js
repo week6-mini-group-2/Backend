@@ -8,6 +8,18 @@ class UsersService {
     usersRepository = new UsersRepository();
     jwtService = new jwtService();
 
+    findAll = async () => {
+        return await this.usersRepository.findAll();
+    }
+
+    findOneById = async(userId) => {
+        return await this.usersRepository.findOneById(userId);
+    };
+
+    findOneByNickname = async(nickname) => {
+        return await this.usersRepository.findUser(nickname);
+    };
+
     // createUser
     createUser = async (nickname, password) => {
         // try {

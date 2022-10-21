@@ -7,6 +7,10 @@ class UsersRepository{
         this.Sequelize = sequelize;
     };
 
+    findAll = async () => {
+        return await this.Users.findAll({})
+    };
+
     // findOneById
     findOneById = async (userId) => {
         return await this.Users.findOne({where : {userId: userId}});

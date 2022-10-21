@@ -16,6 +16,30 @@ const userSchema = joi.object({
 class UsersController {
     usersService = new UsersService();
     
+    //모든 유저 정보 보여주기
+    getUserInfo = async (req, res, next) => {
+        try {
+            const userInfo = await this.usersService.findAll();
+            res.status(200).json({
+                result: userInfo
+            });
+        } catch (error) {
+            res.status(401).json({"Message": "모든 유저 정보를 불러오지 못했습니다.", "error": error} )
+        }
+    };
+
+    getUserInfoById = async (req, res, next) => {
+        try {
+            const { userId } = req.params;
+            const userInfo =  await this.usersService.findOneById(userId);
+            res.status(200).json({
+                result: userInfo
+            });
+        } catch (error) {
+            res.status(401).json({"Message": "대상 유저 정보를 불러오지 못했습니다.", "error": error} )
+        }
+    };
+    
     // userSignup
     userSignup = async (req,res,next) => {
         const { nickname, password, confirmPassword } = await userSchema.validateAsync(req.body).catch(e => {
@@ -69,7 +93,6 @@ class UsersController {
             next(error)
         }
     }
-
 
     // userLogout
     userLogout = async (req,res,next)=>{
