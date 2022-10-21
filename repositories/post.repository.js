@@ -7,12 +7,13 @@ class PostsRepository{
     findOneByUserId = async(userId) => {
         return await Posts.find({where : {postId: postId}});
     };
-    createPost = async(userId, imageUrl, title) => {
-        return await Posts.create({
+    createPost = async(userId, img, title,content) => {
+        await Posts.create({
             userId,
             title,
-            imageUrl,
-            likesNum:0,
+            img,
+            content,
+            lookupNum:0,
             // likesNum: Math.round(Math.random()*10),
             // commentsNum: Math.round(Math.random()*10)
         });

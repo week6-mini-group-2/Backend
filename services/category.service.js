@@ -1,13 +1,13 @@
-const TodosRepository = require('../repositories/todo.repository');
+const CategoryRepository = require('../repositories/category.repository');
 
-class TodosService {
-    todosRepository = new TodosRepository();
+class CategoryService {
+    categoryRepository = new CategoryRepository();
 
     // createTodo
     createTodo = async (userId,postId,todo)=>{
         // todo 수 만큼 todolist 생성
         for(let todoList in todo){
-            await this.todosRepository.createTodo(postId, userId, todo[todoList].content);
+            await this.todosRepository.createTodo(postId, userId, todoo[todList].content);
         }
 
         return {msg: "Todos created"}
@@ -23,4 +23,4 @@ class TodosService {
     }
 }
 
-module.exports = TodosService;
+module.exports = CategoryService;

@@ -48,7 +48,8 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING
     },
     lookup: {
-      type: DataTypes.INTEGER
+      type: DataTypes.INTEGER,
+      defaultValue: 0, //시작값 0
     },
     createdAt: {
       allowNull: false,
