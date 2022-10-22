@@ -36,13 +36,21 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.INTEGER
     },
     nickname: {
+      allowNull: false,
       type: DataTypes.STRING
     },
     password: {
+      allowNull: false,
       type: DataTypes.STRING
     },
     refreshToken: {
       type: DataTypes.STRING
+    },
+    isAdmin: {
+      allowNull: false,
+      defaultValue: false,
+      type: DataTypes.BOOLEAN,
+
     },
     createdAt: {
       allowNull: false,
