@@ -41,16 +41,16 @@ class PostsController {
         await this.PostsService.updatePost(postId, title, content, userId)
         res.status(201).json({ "message": "게시글 수정에 성공하였습니다" });
 
-    
+    }
     //게시글 삭제
     deletePost = async (req, res, next) => {
         const { title, content } = req.body;
         const { postId } = req.params
         const { userId } = res.locals.user
 
-        await this.PostsService.updatePost(postId, title, content, userId)
+        await this.PostsService.deletePost(postId, title, content, userId)
         res.status(201).json({ "message": "게시글 삭제에 성공하였습니다" });
     }
-}
+
 }
 module.exports = PostsController;

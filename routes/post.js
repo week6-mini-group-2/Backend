@@ -3,7 +3,7 @@ const router = express.Router();
 const authMiddleware = require('../middlewares/authMiddleware');
 
 const PostsController = require('../controllers/post.controller');
-const postsController = new PostsController;
+const postsController = new PostsController();
 
 //게시글 저장
 router.post('/',authMiddleware,postsController.createPost);
@@ -16,5 +16,6 @@ router.get('/:postid',authMiddleware,postsController.getDetailPost);
 router.put('/:postid',authMiddleware,postsController.updatePost);
 //삭제
 router.delete('/:postid',authMiddleware,postsController.deletePost);
+
 module.exports = router;
 
