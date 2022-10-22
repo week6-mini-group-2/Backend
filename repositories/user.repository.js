@@ -53,7 +53,18 @@ class UsersRepository{
 
         const result = await this.sequelize.query(Query,{type:Sequelize.QueryTypes.UPDATE,})
         return result
-    }
+    };
+
+    giveAuthority = async(userId) => {
+        const userInfo = await this.Users.findOne({where : {userId: userId}});
+        let adminStat = false;
+        if(!userInfo.isAdmin){adminStat = true};
+
+        return await this.Users.update(
+            {isAdmin: adminStat},
+            {where: {userId: userId}}
+        );
+    };
 }
 
 module.exports = UsersRepository;

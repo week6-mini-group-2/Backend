@@ -10,13 +10,21 @@ module.exports = {
         type: Sequelize.INTEGER
       },
       nickname: {
+        allowNull: false,
         type: Sequelize.STRING
       },
       password: {
+        allowNull: false,
         type: Sequelize.STRING
       },
       refreshToken: {
         type: Sequelize.STRING
+      },
+      isAdmin: {
+        allowNull: false,
+        defaultValue: false,
+        type: Sequelize.BOOLEAN,
+  
       },
       createdAt: {
         allowNull: false,

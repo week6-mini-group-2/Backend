@@ -58,12 +58,15 @@ class UsersService {
         // refreshToken 암호화
         const hash_refreshToken = bcrypt.hashSync(refreshToken,5);
         
-
         // refreshToken db 저장
         await this.usersRepository.updateRefreshToken(findUser.userId, hash_refreshToken); 
 
-        return {AccessToken:accessToken,RefreshToken:refreshToken} 
-    }
+        return {AccessToken: accessToken, RefreshToken: refreshToken};
+    };
+
+    giveAuthority = async(userId) => {
+        return await this.usersRepository.giveAuthority(userId);
+    };
 }
 
 module.exports = UsersService;
