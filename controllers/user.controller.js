@@ -74,7 +74,6 @@ class UsersController {
             // 로그인 서비스 로직 호출
             const result = await this.usersService.loginUser(nickname, password);
             if(result.err){ res.status(400).json({ "ErrorMassge": "닉네임 혹은 비밀번호를 확인해주세요." }) }
-        
             const refreshDate = new Date();
             refreshDate.setDate(refreshDate.getDate()+7);
             res.cookie('RefreshToken', `Bearer ${result.RefreshToken}`, {
@@ -86,19 +85,29 @@ class UsersController {
                 expires: new Date(Date.now() + 10800000), // 3시간
             });
 
-            res.status(201).json({ data: result });
+            res.status(201).json({"data": "로그인에 성공하였습니다." });
 
         } catch (error) {
             next(error)
         }
-    }
+    };
 
     // userLogout
     userLogout = async (req,res,next)=>{
         res.clearCookie('AccessToken');
         res.clearCookie('RefreshToken');
         res.status(201).json({ data: '로그아웃 완료 !' });
-    }
+    };
+
+    giveAuthority = async (req, res, next) => {
+        try {
+            const { userId } = req.params;
+            await this.usersService.giveAuthority(userId);
+            res.status(200).send("userId: " + userId + " 에게 admin 권한을 부여하였습니다.");
+        } catch (error) {
+            res.status(400).send(error);
+        }
+    };
 }
 
 module.exports = UsersController; 
