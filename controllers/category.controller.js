@@ -16,13 +16,14 @@ class CategoriesController {
     };
 
     deleteCategory = async(req, res, next) => {
-        // try {
+
+        try {
             const { categoryId } = req.params;
             const deleteValue = await this.categoriesService.deleteCategory(categoryId);
             res.status(200).json({ msg:"코멘트가 삭제되었습니다."});    
-        // } catch (error) {
-        //     res.status(400).send(error);
-        // }
+        } catch (error) {
+            res.status(400).send(error);
+        }
     };
 
     updateCategory = async(req, res, next) => {

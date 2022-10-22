@@ -73,7 +73,6 @@ class UsersController {
             
             // 로그인 서비스 로직 호출
             const result = await this.usersService.loginUser(nickname, password);
-            console.log(result);
             if(result.err){ res.status(400).json({ "ErrorMassge": "닉네임 혹은 비밀번호를 확인해주세요." }) }
         
             const refreshDate = new Date();
@@ -97,7 +96,7 @@ class UsersController {
     // userLogout
     userLogout = async (req,res,next)=>{
         res.clearCookie('AccessToken');
-        // res.clearCookie('RefreshToken');
+        res.clearCookie('RefreshToken');
         res.status(201).json({ data: '로그아웃 완료 !' });
     }
 }
