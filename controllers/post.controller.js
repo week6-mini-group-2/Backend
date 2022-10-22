@@ -27,7 +27,7 @@ class PostsController {
 
     //상세페이지
     getDetailPost = async (req, res, next) => {
-        const {postId} = req.params;
+        const { postId } = req.params;
         const postOne = await this.PostsService.getDetailPost(postId);
 
         res.status(200).json({ result: postOne })
@@ -41,7 +41,7 @@ class PostsController {
         await this.PostsService.updatePost(postId, title, content, userId)
         res.status(201).json({ "message": "게시글 수정에 성공하였습니다" });
     }
-    
+
     //게시글 삭제
     deletePost = async (req, res, next) => {
         const { title, content } = req.body;
