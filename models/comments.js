@@ -36,6 +36,9 @@ module.exports = (sequelize, DataTypes) => {
     userId: {
       type: DataTypes.INTEGER
     },
+    nickname : {
+      type : DataTypes.STRING
+    },
     comment: {
       type: DataTypes.STRING
     },

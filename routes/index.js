@@ -10,5 +10,4 @@ router.use("/comments", commentsRouter);
 router.use("/form", postsRouter);
 router.use("/users", userRouter);
 router.use("/categories", categoryRouter);
-
 module.exports = router; 

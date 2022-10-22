@@ -2,17 +2,20 @@ const { Posts } = require('../models');
 
 class PostsRepository{
 
-    getAllPost = async(userId) => {
-        return await Posts.find();
+    getAllPost = async() => {
+     const getAllPost = await Posts.findAll();
+     return getAllPost
     }
 
-    getfindById = async(userId) => {
-        return await Posts.find({where : {postId: postId}});
+    getfindById = async(postId) => {
+        const postOne = await Posts.findByPk(postId)
+        return postOne
     };
     
     //조회수 증가
     lookup = async(postId)=>{
-        return await Posts.increment({lookup : 1},{where : {postId}})
+        await Posts.increment({lookup : 1},{where : {postId}})
+     
     }
 
     createPost = async(userId, imageUrl, title,content) => {
@@ -27,17 +30,16 @@ class PostsRepository{
         });
         
     };
-
     updatePost = async(postId, title, content, userId) => {
-        return  await Posts.update(
+        const update = await Posts.update(
             {title : title, content: content} ,
             {where: {userId : userId, postId: postId}},
         )
-        
+        return update
     };
 
-    deletePost = async(userId,postId) => {
-        return   await Posts.destroy({where: {userId,postId}});
+    deletePost = async({userId,postId}) => {
+        await Posts.destroy({where: {userId,postId}});
       
     };
 }
