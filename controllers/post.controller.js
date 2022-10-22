@@ -5,7 +5,6 @@ class PostsController {
 
     // createPosts
     createPost = async (req, res, next) => {
-
         try {
             const { title, img, content } = req.body;
             const { userId } = res.locals.user;
@@ -52,10 +51,5 @@ class PostsController {
         await this.PostsService.updatePost(postId, title, content, userId)
         res.status(201).json({ "message": "게시글 삭제에 성공하였습니다" });
     }
-
-
-
-
 }
-
 module.exports = PostsController;
