@@ -16,6 +16,7 @@ class CategoriesController {
     };
 
     deleteCategory = async(req, res, next) => {
+
         try {
             const { categoryId } = req.params;
             const deleteValue = await this.categoriesService.deleteCategory(categoryId);
