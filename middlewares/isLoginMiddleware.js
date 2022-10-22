@@ -20,7 +20,6 @@ exports.isLogout = (req, res, next) => {
 exports.isLogin = (req, res, next) => {
   try {
     const cookies = req.cookies['AccessToken'];
-    console.log(cookies)
     if (!cookies) {
       return res.status(403).send({
         errorMessage: '로그인이 필요합니다.',

@@ -23,7 +23,7 @@ class PostsController {
             next(error);
         }
     }
-
+    
      // findOneByPostId
     // findAllPosts
     // deletePosts
