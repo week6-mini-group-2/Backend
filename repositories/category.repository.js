@@ -1,36 +1,30 @@
 const { Categories } = require('../models');
 
-class CategoryRepository{
-    // findAllById
-    findAllById = async(userId) => {
-        return await Categories.find({where : {userId: userId}});
-    }
-    // findOneByPostId
-    findOneByPostId = async(postId) => {
-        return await Categories.find({where : {postId: postId}});
-    };
-    // createTodo
-    createcategory = async(postId,userId, content) => {
-        return await Categories.create({
-            userId,
-            postId,
-            content,
-            done: false
+class CategoriesRepository{
+    createCategory = async(name, rewards) => {
+        const categoryInfo = await Categories.create({
+            name: name,
+            rewards: rewards
         });
+        return categoryInfo.commentId;
     };
-    // clearTodo
-    clearcategory = async(todoId) => {
-        const todoInfo = await Categories.find({where : {todoId : todoId}});
-        const isDone = todoInfo.done;
-        return await Categories.update(
-            {where: {todoId : todoId}},
-            {done : !isDone} 
-        )
+
+    updateCategory = async(categoryId, name, rewards) => {
+        const updateValue = await Categories.update(
+            {name : name, rewards: rewards},
+            {where: {categoryId : categoryId}},
+        );
+        return updateValue;
     };
-    // deleteTodo
-    deletecategory = async(todoId) => {
-        return await Categories.delete({where: {todoId: todoId}});
+
+    deleteCategory = async(categoryId) => {
+        const destroyValue = await Categories.destroy({where: {categoryId: categoryId}});
+        return destroyValue;
     };
+
+    getCategory = async() => {
+        return await Categories.findAll({});
+    }
 }
 
-module.exports = CategoryRepository;
+module.exports = CategoriesRepository;

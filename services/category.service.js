@@ -1,26 +1,25 @@
-const CategoryRepository = require('../repositories/category.repository');
+const CategoriesRepository = require('../repositories/category.repository');
 
-class CategoryService {
-    categoryRepository = new CategoryRepository();
+class CategoriesService {
+    categoriesRepository = new CategoriesRepository();
 
-    // createTodo
-    createTodo = async (userId,postId,todo)=>{
-        // todo 수 만큼 todolist 생성
-        for(let todoList in todo){
-            await this.todosRepository.createTodo(postId, userId, todoo[todList].content);
-        }
+    // createComments
+    createCategory = async(name, rewards) => {
+        return await this.categoriesRepository.createCategory(name, rewards);
+    };
 
-        return {msg: "Todos created"}
-    }
+    // deleteComments
+    deleteCategory = async(categoryId) => {
+        return await this.categoriesRepository.deleteCategory(categoryId);
+    };
+    // updateComments
+    updateCategory = async(categoryId, name, rewards) => {
+        return await this.categoriesRepository.updateCategory(categoryId, name, rewards);
+    };
 
-    // clearTodo
-    clearTodo = async (todoId) => {
-        return await this.todosRepository.clearTodo(todoId);
-    }
-    // deleteTodo
-    deleteTodo = async (todoId) => {
-        return await this.todosRepository.deleteTodo(todoId);
+    getCategory = async() => {
+        return await this.categoriesRepository.getCategory();
     }
 }
 
-module.exports = CategoryService;
+module.exports = CategoriesService;

@@ -10,11 +10,11 @@ class CommentsService {
 
     // deleteComments
     deleteComment = async(commentId) => {
-        return awaitthis.commentsRepository.deleteComment(commentId);
+        return await this.commentsRepository.deleteComment(commentId);
     };
     // updateComments
     updateComment = async(commentId, comment) => {
-        return awaitthis.commentsRepository.updateComment(commentId, comment);
+        return await this.commentsRepository.updateComment(commentId, comment);
     };
 }
 

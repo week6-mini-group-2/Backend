@@ -9,6 +9,6 @@ const categoryRouter = require('./category.js');
 router.use("/comments", commentsRouter);
 router.use("/form", postsRouter);
 router.use("/users", userRouter);
-router.use("/category", categoryRouter);
+router.use("/categories", categoryRouter);
 
 module.exports = router; 

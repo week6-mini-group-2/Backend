@@ -13,13 +13,13 @@ class CommentsRepository{
     };
     updateComment = async(commentId, comment) => {
         const updateValue = await Comments.update(
+            {comment : comment, editCheck: true} ,
             {where: {commentId : commentId}},
-            {comment : comment, editCheck: true} 
         );
         return updateValue;
     };
     deleteComment = async(commentId) => {
-        const deleteValue = await Comments.delete({where: {commentId: commentId}});
+        const deleteValue = await Comments.destroy({where: {commentId: commentId}});
         return deleteValue;
     };
 

@@ -2,14 +2,12 @@ const express = require('express');
 const router = express.Router();
 const authMiddleware = require('../middlewares/authMiddleware');
 
-const CategoryController = require('../controllers/category.controller');
-const categoryController = new CategoryController;
+const CategoriesController = require('../controllers/category.controller');
+const categoriesController = new CategoriesController;
 
-// todo 만들기
-router.post('/', authMiddleware, categoryController.createcategory);
-// todo 삭제
-router.delete('/', authMiddleware, categoryController.deletecategory);
-// todo 클리어
-router.put('/', authMiddleware, categoryController.clearcategory);
+router.post('/', categoriesController.createCategory);
+router.put('/:categoryId', categoriesController.updateCategory);
+router.delete('/:categoryId', categoriesController.deleteCategory);
+router.get('/', categoriesController.getCategory);
 
 module.exports = router;
