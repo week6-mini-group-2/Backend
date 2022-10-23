@@ -8,7 +8,6 @@ class CommentsRepository{
             comment,
             editCheck: false
         });
-        console.log(commentInfo)
         return commentInfo.commentId;
     };
     updateComment = async(commentId, comment) => {

@@ -21,7 +21,7 @@ module.exports = (sequelize, DataTypes) => {
         onDelete: "cascade",
         onUpdate: "cascade"
       });
-      models.Users.hasOne(models.Ranks, {
+      models.Users.hasMany(models.Ranks, {
         foreignKey: 'userId',
         onDelete: "cascade",
         onUpdate: "cascade"
