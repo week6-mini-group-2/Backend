@@ -3,13 +3,12 @@ const { Posts } = require('../models');
 class PostsRepository{
 
     getAllPost = async() => {
-     const getAllPost = await Posts.findAll();
-     return getAllPost
+     return await Posts.findAll();
     }
 
     getfindById = async(postId) => {
-        const postOne = await Posts.findByPk(postId)
-        return postOne
+        return await Posts.findByPk(postId)
+     
     };
     
     //조회수 증가
