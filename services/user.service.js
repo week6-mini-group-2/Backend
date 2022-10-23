@@ -22,7 +22,7 @@ class UsersService {
 
     // createUser
     createUser = async (nickname, password) => {
-        // try {
+        try {
             // 중복유저 검색
             const findUser = await this.usersRepository.findUser(nickname);
 
@@ -36,9 +36,9 @@ class UsersService {
             const signup = await this.usersRepository.signup(nickname,encrpytedPassword);
 
             return signup;
-        // } catch (error) {
-        //     return error
-        // }
+        } catch (error) {
+            return error
+        }
     }
 
     // loginUser

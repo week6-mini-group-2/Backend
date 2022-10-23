@@ -1,81 +1,66 @@
 const PostsRepository = require('../repositories/post.repository');
+const RanksRepository = require('../repositories/rank.repository');
 
 class PostsService {
     postsRepository = new PostsRepository();
+    ranksRepository = new RanksRepository();
 
     // createPosts
-    createPost = async (title,imageUrl,userId) => {
+    createPost = async (userId, categoryId, imageUrl, title, content) => {
         try {
             // 게시글 생성
-            return await this.postsRepository.createPost(userId, imageUrl, title);
+            const rankInfoExists = await this.ranksRepository.isRankInfoExistInUser(userId, categoryId);
+            if(!rankInfoExists){
+                await this.ranksRepository.createRankAndScore(userId, categoryId);
+            }
 
-            // 게시물 작성 성공 시 postId 반환
+            return await this.postsRepository.createPost(userId, categoryId, imageUrl, title, content);
+
         } catch (error) {
             throw new Error(error);
         }
     
-    }
+    };
+
     //모든 게시글 조회
-    getAllPost = async () => {
-
-        const result = await this.postsRepository.getAllPost()
-        result.sort((a, b) => {
-        b.createdAt - a.createdAt;
-        })
-
-        result.map((item) => {
-            return {
-            postId: item.postId,
-            nickname: item.nickname,
-            title: item.title,
-            createdAt: item.createdAt,
-            updatedAt: item.updatedAt,
-            lookup: item.lookup
-        
-        };
-        });
-     
+    getAllPosts = async () => {
+        return await this.postsRepository.getAllPosts();
     };
 
    //상세페이지
     getDetailPost = async (postId) => {
-        
-        const postOne = await this.postsRepository.getfindById(postId);
-                        await this.postsRepository.lookup(postId)
-        return {
-            postId : postOne.postId,
-            userId : postOne.userId,
-            title : postOne.title,
-            content : postOne.content,
-            createdAt : postOne.createdAt,
-            updatedAt : postOne.updatedAt 
-        }
-   
+        await this.postsRepository.lookup(postId)
+        return await this.postsRepository.getPostById(postId);
+    };
+
+    getPostsByCategory = async (categoryId) => {
+        return await this.postsRepository.getPostsByCategory(categoryId);
     }
+
     // 포스트 수정
-    updatePost = async (postId, title, content, userId) => {
+    updatePost = async (postId, title, content, imageUrl) => {
 
-        const findOnePost = await this.postsRepository.getfindById(postId)
+        // const findOnePost = await this.postsRepository.getPostById(postId)
 
-        if(findOnePost.userId !== userId){
-            throw new Error("작성자가 일치 하지 않습니다.")
-        }
+        // if(findOnePost.userId !== userId){
+        //     throw new Error("작성자가 일치 하지 않습니다.")
+        // }
 
-        return await this.postsRepository.updatePost(postId, title, content, userId)
-             
-        }
+        return await this.postsRepository.updatePost(postId, title, content, imageUrl)
+    };
         //포스트 삭제
-    deletePost = async (postId,userId) => {
+    deletePost = async (postId) => {
 
-        const findOnePost = await this.postsRepository.getfindById(postId)
+        // const findOnePost = await this.postsRepository.getPostById(postId)
 
-        if(findOnePost.userId !== userId){
-          throw new Error("작성자가 일치 하지 않습니다.")
-        }
+        // if(findOnePost.userId !== userId){
+        //   throw new Error("작성자가 일치 하지 않습니다.")
+        // }
 
-       return await this.postsRepository.deletePost(postId,userId)
+       return await this.postsRepository.deletePost(postId);
+    };
 
-    }
+
     
 }
 

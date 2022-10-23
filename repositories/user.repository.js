@@ -1,5 +1,5 @@
 const { Users,sequelize,Sequelize } = require('../models');
-
+const { Ranks } = require('../models')
 class UsersRepository{
     constructor(){
         this.Users = Users;
@@ -8,23 +8,34 @@ class UsersRepository{
     };
 
     findAll = async () => {
-        return await this.Users.findAll({})
+        return await this.Users.findAll({
+            include: [{
+                model: Ranks
+            }]
+        });
     };
 
     // findOneById
     findOneById = async (userId) => {
-        return await this.Users.findOne({where : {userId: userId}});
-    }
+        return await this.Users.findOne({
+            where : {userId: userId},
+            include: [{
+                model: Ranks
+            }]
+            },
+        );
+    };
     
     // createUser
     signup = async(nickname, encrpytedPassword) => {
 
-        await this.Users.create({
+        const userInfo = await this.Users.create({
             nickname,
             password:encrpytedPassword
         });
+
         return {msg: "new User created"};
-    }
+    };
 
     // findUser
     findUser = async (nickname) => {
@@ -36,12 +47,11 @@ class UsersRepository{
         `;
 
         try{
-            const result = await this.sequelize.query(Query,{type:Sequelize.QueryTypes.SELECT,})
-            return result
+            return await this.sequelize.query(Query,{type:Sequelize.QueryTypes.SELECT,});
         }catch(e){
             return 'USER SELECT ERROR !'
         }
-    }
+    };
 
     updateRefreshToken = async (userId,refreshToken) => {
 
@@ -51,8 +61,7 @@ class UsersRepository{
             WHERE userId = ${userId} 
         `;
 
-        const result = await this.sequelize.query(Query,{type:Sequelize.QueryTypes.UPDATE,})
-        return result
+        return await this.sequelize.query(Query,{type:Sequelize.QueryTypes.UPDATE,});
     };
 
     giveAuthority = async(userId) => {
