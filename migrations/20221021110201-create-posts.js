@@ -18,6 +18,12 @@ module.exports = {
       title: {
         type: Sequelize.STRING
       },
+      imageUrl: {
+        type: Sequelize.STRING
+      },
+      nickname: {
+        type: Sequelize.STRING
+      },
       content: {
         type: Sequelize.STRING
       },

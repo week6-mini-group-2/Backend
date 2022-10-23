@@ -10,6 +10,12 @@ class CommentsRepository{
         });
         return commentInfo.commentId;
     };
+
+    getAllComment = async({postId})=>{
+        const findValue = await Comments.findAll({postId})
+        return findValue
+    }
+    
     updateComment = async(commentId, comment) => {
         const updateValue = await Comments.update(
             {comment : comment, editCheck: true} ,

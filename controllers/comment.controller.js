@@ -19,6 +19,13 @@ class CommentsController {
             res.status(400).send(error);
         }
     }
+    getAllComment = async(req,res,params)=>{
+        const {postId} = req.params
+        console.log(postId,"컨트롤러")
+        const findComments = await this.commentsService.getAllComment({postId})
+        console.log(findComments)
+        res.status(200).json({result: findComments});
+    }
     // deleteComment
     deleteComment = async(req, res, next) => {
         try {

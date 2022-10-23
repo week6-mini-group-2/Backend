@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const authMiddleware = require('../middlewares/authMiddleware');
-
+const isAdmin = require('../middlewares/isAdmin');
 const PostsController = require('../controllers/post.controller');
 const postsController = new PostsController();
 

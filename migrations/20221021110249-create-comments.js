@@ -18,6 +18,9 @@ module.exports = {
       comment: {
         type: Sequelize.STRING
       },
+      nickname : {
+        type : Sequelize.STRING
+      },
       editCheck: {
         type: Sequelize.BOOLEAN
       },
