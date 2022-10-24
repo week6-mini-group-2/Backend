@@ -26,6 +26,16 @@ class RanksController {
             res.status(400).send(error);
         }
     };
+
+    deleteRankAndScoreByAdmin = async(req, res, next) => {
+        try {
+            const { rankId } = req.params;
+            const deleteValue = await this.ranksService.deleteRankAndScoreByAdmin(rankId);
+            res.status(200).json({result: deleteValue});    
+        } catch (error) {
+            res.status(400).send(error);
+        }
+    };
     // 
     updateScore = async(req, res, next) => {
         try {

@@ -16,10 +16,9 @@ class CategoriesController {
     };
 
     deleteCategory = async(req, res, next) => {
-
         try {
             const { categoryId } = req.params;
-            const deleteValue = await this.categoriesService.deleteCategory(categoryId);
+            await this.categoriesService.deleteCategory(categoryId);
             res.status(200).json({ msg:"카테고리가 삭제되었습니다."});    
         } catch (error) {
             res.status(400).send(error);

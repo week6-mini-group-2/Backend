@@ -19,18 +19,21 @@ class CommentsController {
             res.status(400).send(error);
         }
     }
-    // getAllComment = async(req,res,params)=>{
-    //     const {postId} = req.params
-    //     console.log(postId,"컨트롤러")
-    //     const findComments = await this.commentsService.getAllComment({postId})
-    //     console.log(findComments)
-    //     res.status(200).json({result: findComments});
-    // }
     // deleteComment
     deleteComment = async(req, res, next) => {
         try {
             const { commentId } = req.params;
             const deleteValue = await this.commentsService.deleteComment(commentId);
+            res.status(200).json({result: deleteValue, msg:"코멘트가 삭제되었습니다."});    
+        } catch (error) {
+            res.status(400).send(error);
+        }
+    };
+
+    deleteCommentByAdmin = async(req, res, next) => {
+        try {
+            const { commentId } = req.params;
+            const deleteValue = await this.commentsService.deleteCommentByAdmin(commentId);
             res.status(200).json({result: deleteValue, msg:"코멘트가 삭제되었습니다."});    
         } catch (error) {
             res.status(400).send(error);

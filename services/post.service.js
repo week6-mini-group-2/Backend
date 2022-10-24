@@ -39,27 +39,16 @@ class PostsService {
 
     // 포스트 수정
     updatePost = async (postId, title, content, imageUrl) => {
-
-        // const findOnePost = await this.postsRepository.getPostById(postId)
-
-        // if(findOnePost.userId !== userId){
-        //     throw new Error("작성자가 일치 하지 않습니다.")
-        // }
-
         return await this.postsRepository.updatePost(postId, title, content, imageUrl)
     };
         //포스트 삭제
     deletePost = async (postId) => {
-
-        // const findOnePost = await this.postsRepository.getPostById(postId)
-
-        // if(findOnePost.userId !== userId){
-        //   throw new Error("작성자가 일치 하지 않습니다.")
-        // }
-
        return await this.postsRepository.deletePost(postId);
     };
 
+    deletePostByAdmin = async(postId) => {
+        return await this.postsRepository.deletePostByAdmin(postId);
+    }
 
     
 }

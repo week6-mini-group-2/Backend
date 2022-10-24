@@ -8,6 +8,7 @@ const commentsController = new CommentsController;
 router.post('/:postId', authMiddleware, commentsController.createComment);
 router.put('/:commentId', authMiddleware, commentsController.updateComment);
 router.delete('/:commentId', authMiddleware, commentsController.deleteComment);
+router.delete('/admin/:commentId', authMiddleware, commentsController.deleteCommentByAdmin);
 // router.get('/:postId', authMiddleware, commentsController.getAllComment);
 // router.get('/',authMiddleware, commentsController.getComment);
 

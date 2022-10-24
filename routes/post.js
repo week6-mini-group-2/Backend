@@ -18,5 +18,7 @@ router.put('/:postId',authMiddleware,postsController.updatePost);
 //삭제
 router.delete('/:postId',authMiddleware,postsController.deletePost);
 
+router.delete('/admin/:postId',authMiddleware,postsController.deletePostByAdmin);
+
 module.exports = router;
 

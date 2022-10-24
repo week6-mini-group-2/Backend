@@ -55,6 +55,14 @@ class PostsController {
 
         await this.postsService.deletePost(postId, userId)
         res.status(201).json({ "message": "게시글 삭제에 성공하였습니다" });
+    };
+
+    deletePostByAdmin = async (req, res, next) => {
+        const { postId } = req.params
+        const { userId } = res.locals.user
+
+        await this.postsService.deletePostByAdmin(postId, userId)
+        res.status(201).json({ "message": "게시글 삭제에 성공하였습니다" });
     }
 
 }
