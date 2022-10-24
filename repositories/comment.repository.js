@@ -24,8 +24,17 @@ class CommentsRepository{
         return updateValue;
     };
     deleteComment = async(commentId) => {
-        const deleteValue = await Comments.destroy({where: {commentId: commentId}});
-        return deleteValue;
+        return await Comments.destroy({where: {commentId: commentId}});
+    };
+
+    deleteCommentByAdmin = async(commentId) => {
+        const { userId } = res.locals.user;
+        const sourceUserInfo = await Users.findOne({where: {userId: userId}});
+        if(!sourceUserInfo.isAdmin){
+            return {result: false, message: "권한이 없습니다."};
+        }else{
+            return await Comments.destroy({where: {commentId: commentId}});
+        }
     };
 
 }

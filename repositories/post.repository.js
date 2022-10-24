@@ -1,5 +1,6 @@
 const { Posts } = require('../models');
 const { Comments } = require('../models');
+const { Users } = require('../models');
 class PostsRepository{
 
     getAllPosts = async() => {
@@ -60,6 +61,16 @@ class PostsRepository{
         return await Posts.destroy({where: {postId: postId}});
       
     };
+
+    deletePostByAdmin = async(postId) => {
+        const { userId } = res.locals.user;
+        const sourceUserInfo = await Users.findOne({where: {userId: userId}});
+        if(!sourceUserInfo.isAdmin){
+            return {result: false, message: "권한이 없습니다."};
+        }else{
+            return await Posts.destroy({where: {postId: postId}});
+        }
+    }
 }
 
 module.exports = PostsRepository;

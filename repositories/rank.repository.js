@@ -1,5 +1,5 @@
 const { Ranks } = require('../models');
-
+const { Users } = require('../models');
 class RanksRepository{
     // getRank
     getUsersRankAndScore = async(userId, categoryId) => {
@@ -56,8 +56,26 @@ class RanksRepository{
 
     deleteRankAndScore = async(rankId) => {
         const rankInfo = await Ranks.findOne(
-            {where: {userId: userId, categoryId: categoryId}}
+            {where: {rankId: rankId}}
         );
+        if(!rankInfo){
+            return {result: false, message: "해당 랭크 정보가 존재하지 않습니다."};
+        }else{
+            return await Ranks.destroy({where: {rankId: rankId}});
+        }
+    };
+
+    deleteRankAndScoreByAdmin = async(targetUserId, rankId) => {
+        const { userId } = res.locals.user;
+        const sourceUserInfo = await Users.findOne({where: {userId: userId}});
+        if(!sourceUserInfo.isAdmin){
+            return {result: false, message: "권한이 없습니다."};
+        };
+
+        const rankInfo = await Ranks.findOne(
+            {where: {rankId: rankId}}
+        );
+
         if(!rankInfo){
             return {result: false, message: "해당 랭크 정보가 존재하지 않습니다."};
         }else{

@@ -23,6 +23,9 @@ class RanksService {
         return await this.ranksRepository.deleteRankAndScore(rankId);
     };
 
+    deleteRankAndScoreByAdmin = async(rankId) => {
+        return await this.ranksRepository.deleteRankAndScoreByAdmin(rankId);
+    }
     // createRankAndService
     createRankAndScore = async(userId, categoryId) => {
         return await this.ranksRepository.createRankAndScore(userId, categoryId)

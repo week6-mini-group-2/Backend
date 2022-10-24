@@ -11,8 +11,10 @@ router.put('/:categoryId',authMiddleware,ranksController.updateScore);
 
 router.get('/user/:categoryId',authMiddleware,ranksController.getUsersRankAndScore);
 
-router.get('/category/:categoryId',authMiddleware,ranksController.getRanksByCategory);
+router.get('/category/:categoryId',ranksController.getRanksByCategory);
 
 router.delete('/:rankId',authMiddleware,ranksController.deleteRankAndScore);
+
+router.delete('/admin/:rankId', authMiddleware,ranksController.deleteRankAndScoreByAdmin);
 
 module.exports = router;
