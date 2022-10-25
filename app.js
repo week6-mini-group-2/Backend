@@ -2,8 +2,15 @@ const express = require("express");
 const cookieParser = require("cookie-parser");
 const { sequelize } = require("./models");
 const app = express();
-
+const cors = require("cors");
 const router = require("./routes");
+
+app.use(
+  cors({
+    origin: '*',
+    credential: true,
+  })
+);
 
 sequelize
   .sync({ force: false })
@@ -19,6 +26,8 @@ app.use([
   express.urlencoded({ extended: false }),
   cookieParser(),
 ]);
+
+
 app.use("/", router);
 
 app.listen(3000, () => {
