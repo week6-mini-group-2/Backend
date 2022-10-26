@@ -76,16 +76,21 @@ class UsersController {
             if(result.err){ res.status(400).json({ "ErrorMassge": "닉네임 혹은 비밀번호를 확인해주세요." }) }
             const refreshDate = new Date();
             refreshDate.setDate(refreshDate.getDate()+7);
-            res.cookie('RefreshToken', `Bearer ${result.RefreshToken}`, {
-                expires: refreshDate // 7일
-            });
+            // res.cookie('RefreshToken', `Bearer ${result.RefreshToken}`, {
+            //     expires: refreshDate // 7일
+            // });
 
-            // accessToken 쿠키 생성 
-            res.cookie('AccessToken', `Bearer ${result.AccessToken}`, {
-                expires: new Date(Date.now() + 10800000), // 3시간
-            });
+            // // accessToken 쿠키 생성 
+            // res.cookie('AccessToken', `Bearer ${result.AccessToken}`, {
+            //     expires: new Date(Date.now() + 3600000), // 1시간
+            // });
 
-            res.status(201).json({"data": "로그인에 성공하였습니다." });
+
+            res.status(201).json({
+                "accessToken": 'Bearer ' +  result.AccessToken,
+                "refreshToken": "Bearer " + result.RefreshToken,
+                "accessTokenExpiresIn": '360000',
+            });
 
         } catch (error) {
             next(error)
