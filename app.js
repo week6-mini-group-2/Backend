@@ -7,7 +7,7 @@ const router = require("./routes");
 
 app.use(
   cors({
-    origin: 'http://localhost:3000/',
+    origin: 'https://earth-green-efz7yi461-earthgreen.vercel.app/',
     credential: true,
   })
 );
