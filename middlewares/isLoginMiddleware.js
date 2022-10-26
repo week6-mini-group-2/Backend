@@ -1,7 +1,8 @@
 // 로그인 되어 있는 유저일 경우 Error를 반환한다.
 exports.isLogout = (req, res, next) => {
-  try {
-    const cookies = req.cookies['AccessToken'];
+  // try {
+    console.log(req.cookies)
+    const cookies = req.cookies['accessToken'];
     if (cookies) {
       return res.status(403).send({
         errorMessage: '이미 로그인이 되어있습니다.',
@@ -10,16 +11,16 @@ exports.isLogout = (req, res, next) => {
 
     next();
     
-  } catch (error) {
-    return res.status(400).send({
-      errorMessage: '잘못된 접근입니다.',
-    });
-  }
+  // } catch (error) {
+  //   return res.status(400).send({
+  //     errorMessage: '잘못된 접근입니다.',
+  //   });
+  // }
 };
 
 exports.isLogin = (req, res, next) => {
   try {
-    const cookies = req.cookies['AccessToken'];
+    const cookies = req.cookies['accessToken'];
     if (!cookies) {
       return res.status(403).send({
         errorMessage: '로그인이 필요합니다.',
