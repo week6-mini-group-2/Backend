@@ -1,4 +1,5 @@
 const joi = require('joi');
+const bcrypt = require('bcrypt');
 
 const UsersService = require('../services/user.service');
 
@@ -21,7 +22,7 @@ class UsersController {
         try {
             const userInfo = await this.usersService.findAll();
             res.status(200).json({
-                result: userInfo
+                result: userInfo,
             });
         } catch (error) {
             res.status(401).json({"Message": "모든 유저 정보를 불러오지 못했습니다.", "error": error} )
@@ -42,6 +43,7 @@ class UsersController {
     
     // userSignup
     userSignup = async (req,res,next) => {
+        console.log(req.body)
         const { nickname, password, confirmPassword } = await userSchema.validateAsync(req.body).catch(e => {
             res.status(400).json({ "ErrorMassge": "입력 정보를 확인해주세요." });    
         });
@@ -66,32 +68,27 @@ class UsersController {
     userLogin = async (req,res,next) => {
             
         try {
-        
             const { nickname, password } = await userSchema.validateAsync(req.body).catch(e => {
                 res.status(400).json({ "ErrorMassge": "입력 정보를 확인해주세요." });    
             });
-            
-            // 로그인 서비스 로직 호출
+
             const result = await this.usersService.loginUser(nickname, password);
             if(result.err){ res.status(400).json({ "ErrorMassge": "닉네임 혹은 비밀번호를 확인해주세요." }) }
+
             const refreshDate = new Date();
-            refreshDate.setDate(refreshDate.getDate()+7);
-            // res.cookie('RefreshToken', `Bearer ${result.RefreshToken}`, {
-            //     expires: refreshDate // 7일
+            refreshDate.setDate(refreshDate.getDate() + 7);
+
+            res.cookie("refreshToken", `Bearer ${result.refreshToken}`, {expires: new Date(Date.now() + 3600000 * 24 * 7)});
+            res.cookie('accessToken', `Bearer ${result.accessToken}`, {expires: new Date(Date.now() + 3600000)});
+            res.cookie("accessTokenExpiresIn", 3600000, {expires: new Date(Date.now() + 3600000)});
+
+            // res.status(201).json({
+            //     "accessToken": 'Bearer ' +  result.AccessToken,
+            //     "refreshToken": "Bearer " + result.RefreshToken,
+            //     "accessTokenExpiresIn": '360000',
             // });
 
-            // // accessToken 쿠키 생성 
-            // res.cookie('AccessToken', `Bearer ${result.AccessToken}`, {
-            //     expires: new Date(Date.now() + 3600000), // 1시간
-            // });
-
-
-            res.status(201).json({
-                "accessToken": 'Bearer ' +  result.AccessToken,
-                "refreshToken": "Bearer " + result.RefreshToken,
-                "accessTokenExpiresIn": '360000',
-            });
-
+            next();
         } catch (error) {
             next(error)
         }
@@ -99,9 +96,9 @@ class UsersController {
 
     // userLogout
     userLogout = async (req,res,next)=>{
-        res.clearCookie('AccessToken');
-        res.clearCookie('RefreshToken');
-        res.status(201).json({ data: '로그아웃 완료 !' });
+        res.clearCookie('accessToken');
+        res.clearCookie('refreshToken');
+        res.status(201).json({ data: '로그아웃 되었습니다.' });
     };
 
     giveAuthority = async (req, res, next) => {

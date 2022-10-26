@@ -46,22 +46,21 @@ class UsersService {
         // 로그인 유효성 검증을 위해 유저 검색
         const [findUser] = await this.usersRepository.findUser(nickname);
         // 유저 정보 없는 경우
-        if(!findUser){ throw new Error('No matching nickname') }
+        if(!findUser){ throw new Error('일치하는 유저 정보가 존재하지 않습니다.') };
         // 비밀번호 일치 여부
         const match_password = bcrypt.compareSync(password,findUser.password);
-        if(!match_password){ throw new Error('No matching password') }
+        if(!match_password){ throw new Error('비밀번호가 일치하지 않습니다.') }
         
         // Token 생성
         const accessToken = await this.jwtService.createAccessToken(findUser.userId);
         const refreshToken = await this.jwtService.createRefreshToken(findUser.userId);
+        await this.usersRepository.updateRefreshToken(findUser.userId, refreshToken); 
 
         // refreshToken 암호화
-        const hash_refreshToken = bcrypt.hashSync(refreshToken,5);
+        const hash_refreshToken = bcrypt.hashSync(refreshToken, 5);
         
         // refreshToken db 저장
-        await this.usersRepository.updateRefreshToken(findUser.userId, hash_refreshToken); 
-
-        return {AccessToken: accessToken, RefreshToken: refreshToken};
+        return {accessToken: accessToken, refreshToken: hash_refreshToken};
     };
 
     giveAuthority = async(userId) => {
