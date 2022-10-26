@@ -7,7 +7,7 @@ const router = require("./routes");
 
 app.use(
   cors({
-    origin: '*',
+    origin: 'http://localhost:3000/',
     credential: true,
   })
 );
