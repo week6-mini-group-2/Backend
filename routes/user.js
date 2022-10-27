@@ -13,4 +13,5 @@ router.get('/userInfo',authMiddleware,usersController.getUserInfo);
 router.get('/userInfo/:userId',authMiddleware,usersController.getUserInfoById);
 router.post('/admin/:userId', usersController.giveAuthority);
 
+
 module.exports = router;

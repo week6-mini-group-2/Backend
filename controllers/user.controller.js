@@ -1,5 +1,6 @@
 const joi = require('joi');
-const bcrypt = require('bcrypt');
+let jwtService = require("../services/jwt.service");
+jwtService = new jwtService();
 
 const UsersService = require('../services/user.service');
 
@@ -23,6 +24,7 @@ class UsersController {
             const userInfo = await this.usersService.findAll();
             res.status(200).json({
                 result: userInfo,
+                accessToken: req.app.locals.accessToken,
             });
         } catch (error) {
             res.status(401).json({"Message": "모든 유저 정보를 불러오지 못했습니다.", "error": error} )
@@ -34,7 +36,8 @@ class UsersController {
             const { userId } = req.params;
             const userInfo =  await this.usersService.findOneById(userId);
             res.status(200).json({
-                result: userInfo
+                result: userInfo,
+                accessToken: req.app.locals.accessToken,
             });
         } catch (error) {
             res.status(401).json({"Message": "대상 유저 정보를 불러오지 못했습니다.", "error": error} )
@@ -43,7 +46,6 @@ class UsersController {
     
     // userSignup
     userSignup = async (req,res,next) => {
-        console.log(req.body)
         const { nickname, password, confirmPassword } = await userSchema.validateAsync(req.body).catch(e => {
             res.status(400).json({ "ErrorMassge": "입력 정보를 확인해주세요." });    
         });
@@ -78,17 +80,16 @@ class UsersController {
             const refreshDate = new Date();
             refreshDate.setDate(refreshDate.getDate() + 7);
 
-            res.cookie("refreshToken", `Bearer ${result.refreshToken}`, {expires: new Date(Date.now() + 3600000 * 24 * 7)});
-            res.cookie('accessToken', `Bearer ${result.accessToken}`, {expires: new Date(Date.now() + 3600000)});
-            res.cookie("accessTokenExpiresIn", 3600000, {expires: new Date(Date.now() + 3600000)});
+            // res.cookie("refreshToken", `Bearer ${result.refreshToken}`, {expires: new Date(Date.now() + 3600000 * 24 * 7)});
+            // res.cookie('accessToken', `Bearer ${result.accessToken}`, {expires: new Date(Date.now() + 3600000)});
+            // res.cookie("accessTokenExpiresIn", 3600000, {expires: new Date(Date.now() + 3600000)});
 
-            // res.status(201).json({
-            //     "accessToken": 'Bearer ' +  result.AccessToken,
-            //     "refreshToken": "Bearer " + result.RefreshToken,
-            //     "accessTokenExpiresIn": '360000',
-            // });
-
-            next();
+            res.status(201).json({
+                message: "로그인에 성공하였습니다.",
+                "accessToken": result.accessToken,
+                "refreshToken": result.refreshToken,
+                "accessTokenExpiresIn": 360000,
+            });
         } catch (error) {
             next(error)
         }
@@ -109,6 +110,12 @@ class UsersController {
         } catch (error) {
             res.status(400).send(error);
         }
+    };
+
+    test = async(req, res, next) => {
+        req.headers.accessToken = await jwtService.createAccessToken(44);
+        req.headers.refreshToken = await jwtService.createRefreshToken(44);
+        next();
     };
 }
 

@@ -7,7 +7,7 @@ const router = require("./routes");
 
 app.use(
   cors({
-    origin: 'https://earth-green-efz7yi461-earthgreen.vercel.app/',
+    origin: '*',
     credential: true,
   })
 );
