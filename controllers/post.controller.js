@@ -11,7 +11,7 @@ class PostsController {
             // post 작성 -> 작성 성공 시 postId 반환
             await this.postsService.createPost(userId, categoryId, imageUrl, title, content);
 
-            res.status(201).json({ "message": "게시글 작성에 성공하였습니다." });
+            res.status(201).json({ "message": "게시글 작성에 성공하였습니다.", accessToken: req.app.locals.accessToken, });
         } catch (error) {
             res.status(400).json({ "message": "게시글 작성에 실패하였습니다." , "error": error});
         }
@@ -21,7 +21,7 @@ class PostsController {
     //모든 게시물 조회
     getAllPosts = async (req, res, next) => {
         const result = await this.postsService.getAllPosts();
-        res.status(200).json({ result: result });
+        res.status(200).json({ result: result, accessToken: req.app.locals.accessToken, });
     }
 
     //상세페이지
@@ -29,13 +29,13 @@ class PostsController {
         const {postId} = req.params;
         const postOne = await this.postsService.getDetailPost(postId);
 
-        res.status(200).json({ result: postOne });
+        res.status(200).json({ result: postOne, accessToken: req.app.locals.accessToken, });
     }
 
     getPostsByCategory = async (req, res, next) => {
         const { categoryId } = req.params;
         const postsByCategory = await this.postsService.getPostsByCategory(categoryId);
-        res.status(200).json({ result: postsByCategory });
+        res.status(200).json({ result: postsByCategory, accessToken: req.app.locals.accessToken, });
     }
 
 
@@ -45,7 +45,7 @@ class PostsController {
         const { postId } = req.params;
         const { userId } = res.locals.user;
         await this.postsService.updatePost(userId, postId, title, content, imageUrl)
-        res.status(201).json({ "message": "게시글 수정에 성공하였습니다" });
+        res.status(201).json({ "message": "게시글 수정에 성공하였습니다", accessToken: req.app.locals.accessToken, });
 
     }
     //게시글 삭제 async ({ })
@@ -54,7 +54,7 @@ class PostsController {
         const { userId } = res.locals.user
 
         await this.postsService.deletePost(postId, userId)
-        res.status(201).json({ "message": "게시글 삭제에 성공하였습니다" });
+        res.status(201).json({ "message": "게시글 삭제에 성공하였습니다", accessToken: req.app.locals.accessToken, });
     };
 
     deletePostByAdmin = async (req, res, next) => {
@@ -62,7 +62,7 @@ class PostsController {
         const { userId } = res.locals.user
 
         await this.postsService.deletePostByAdmin(postId, userId)
-        res.status(201).json({ "message": "게시글 삭제에 성공하였습니다" });
+        res.status(201).json({ "message": "게시글 삭제에 성공하였습니다", accessToken: req.app.locals.accessToken, });
     }
 
 }

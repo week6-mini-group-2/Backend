@@ -6,8 +6,9 @@ const usersRepository = new UsersRepository();
 
 
 module.exports = async (req, res, next) => {
-    // try {
-        let accessToken = req.cookies['accessToken'];
+    try {
+        // let accessToken = req.cookies['accessToken'];
+        let accessToken = req.headers['accessToken'];
         if(!accessToken){res.status(401).send("로그인이 필요합니다.")
         } else {
             let userId = await jwtService.validateAccessToken(accessToken.split(' ')[1]);
@@ -17,7 +18,7 @@ module.exports = async (req, res, next) => {
             }
             next();
         };
-    // } catch (error) {
-    //     res.status(400).send(error)
-    // }
+    } catch (error) {
+        res.status(400).send(error)
+    }
 }
